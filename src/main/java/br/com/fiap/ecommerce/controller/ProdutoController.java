@@ -64,7 +64,7 @@ public class ProdutoController {
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
         if (! produtoService.existsById(id) ) {
-            throw new RuntimeException("id existente");
+            throw new RuntimeException("id inexistente");
         }
 
         produtoService.delete(id);
