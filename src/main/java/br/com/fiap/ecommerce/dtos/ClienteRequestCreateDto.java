@@ -19,14 +19,6 @@ public class ClienteRequestCreateDto {
         return modelMapper.map(this, Cliente.class);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getBairro() {
         return bairro;
     }
