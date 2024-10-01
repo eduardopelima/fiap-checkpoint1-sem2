@@ -5,7 +5,6 @@ import org.modelmapper.ModelMapper;
 import br.com.fiap.ecommerce.model.Cliente;
 
 public class ClienteRequestCreateDto {
-    private Long id;
     private String bairro;
     private String cep;
     private String complemento;

@@ -1,27 +1,16 @@
-package br.com.fiap.ecommerce.model;
+package br.com.fiap.ecommerce.dtos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import org.modelmapper.ModelMapper;
 
-@Entity
-public class ItemPedido {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+import br.com.fiap.ecommerce.model.ItemPedido;
 
-    @Column
+public class ItemPedidoRequestCreateDto {
     private Long id_pedido;
-
-    @Column
     private Long id_produto;
-
-    @Column
     private int quantidade;
-
-    @Column
     private double valor_total;
+
+    private static final ModelMapper modelMapper = new ModelMapper();
 
     public Long getId() {
         return id;
@@ -62,4 +51,14 @@ public class ItemPedido {
     public void setValor_total(double valor_total) {
         this.valor_total = valor_total;
     }
+
+    public static ModelMapper getModelmapper() {
+        return modelMapper;
+    }
+
+    public ItemPedido toModel() {
+        return modelMapper.map(this, ItemPedido.class);
+    }
+
+    
 }

@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.com.fiap.ecommerce.model.ItemPedido;
 import br.com.fiap.ecommerce.repository.ItemPedidoRepository;
 
+@Service
 public class ItemPedidoService {
     @Autowired
     ItemPedidoRepository itemPedidoRepository;

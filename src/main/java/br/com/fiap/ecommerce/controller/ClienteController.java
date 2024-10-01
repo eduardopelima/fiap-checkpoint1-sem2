@@ -17,7 +17,7 @@ import br.com.fiap.ecommerce.dtos.ClienteRequestCreateDto;
 import br.com.fiap.ecommerce.dtos.ClienteRequestUpdateDto;
 import br.com.fiap.ecommerce.dtos.ClienteResponseDto;
 import br.com.fiap.ecommerce.service.ClienteService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("clientes")

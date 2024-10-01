@@ -7,20 +7,14 @@ import org.modelmapper.ModelMapper;
 import br.com.fiap.ecommerce.model.Pedido;
 
 public class PedidoRequestCreateDto {
-    private Long id;
     private LocalDateTime data_pedido;
     private String forma_pagamento;
     private Long id_cliente;
     private String status;
+    private double valor_total;
     
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
     public LocalDateTime getData_pedido() {
         return data_pedido;
     }
@@ -51,7 +45,6 @@ public class PedidoRequestCreateDto {
     public void setValor_total(double valor_total) {
         this.valor_total = valor_total;
     }
-    private double valor_total;
 
     public Pedido toModel() {
         return modelMapper.map(this, Pedido.class);

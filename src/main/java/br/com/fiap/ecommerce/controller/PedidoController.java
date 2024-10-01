@@ -17,7 +17,7 @@ import br.com.fiap.ecommerce.dtos.PedidoRequestCreateDto;
 import br.com.fiap.ecommerce.dtos.PedidoRequestUpdateDto;
 import br.com.fiap.ecommerce.dtos.PedidoResponseDto;
 import br.com.fiap.ecommerce.service.PedidoService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("pedidos")
@@ -36,6 +36,10 @@ public class PedidoController {
 
     @PostMapping
     public ResponseEntity<PedidoResponseDto> create(@RequestBody PedidoRequestCreateDto dto) {
+        System.out.println("aqqweqweqweqweqewqq");
+        System.out.println(dto);
+        System.out.println(dto.getStatus());
+        System.out.println(dto.toModel().getStatus());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(
