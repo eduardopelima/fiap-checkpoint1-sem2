@@ -2,13 +2,22 @@ package br.com.fiap.ecommerce.dtos;
 
 import java.time.LocalDateTime;
 
-public class PedidoRequestResponseDto {
+import org.modelmapper.ModelMapper;
+
+import br.com.fiap.ecommerce.model.Pedido;
+
+public class PedidoResponseDto {
     private Long id;
     private LocalDateTime data_pedido;
     private String forma_pagamento;
     private Long id_cliente;
     private String status;
     private double valor_total;
+    private static final ModelMapper modelMapper = new ModelMapper();
+
+    public PedidoResponseDto toDto(Pedido pedido) {
+        return modelMapper.map(pedido, PedidoResponseDto.class);
+    }
 
     public Long getId() {
         return id;
@@ -45,5 +54,8 @@ public class PedidoRequestResponseDto {
     }
     public void setValor_total(double valor_total) {
         this.valor_total = valor_total;
+    }
+    public static ModelMapper getModelmapper() {
+        return modelMapper;
     }
 }
