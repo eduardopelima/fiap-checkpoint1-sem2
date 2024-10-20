@@ -2,7 +2,6 @@ package br.com.fiap.ecommerce.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,21 +15,25 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.ecommerce.dtos.ProdutoRequestCreateDto;
 import br.com.fiap.ecommerce.dtos.ProdutoRequestUpdateDto;
 import br.com.fiap.ecommerce.dtos.ProdutoResponseDto;
+import br.com.fiap.ecommerce.mapper.ProdutoMapper;
 import br.com.fiap.ecommerce.service.ProdutoService;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/produtos")
+@RequiredArgsConstructor
 public class ProdutoController {
 
-    @Autowired
-    private ProdutoService produtoService;
+    private final ProdutoService produtoService;
+    private final ProdutoMapper produtoMapper;
 
     @GetMapping
     public ResponseEntity<List<ProdutoResponseDto>> list() {
         List<ProdutoResponseDto> dtos = produtoService.list()
             .stream()
-            .map(e -> new ProdutoResponseDto().toDto(e))
+            .map(e -> produtoMapper.toDto(e))
             .toList();
 
         return ResponseEntity.ok().body(dtos);
@@ -44,9 +47,7 @@ public class ProdutoController {
         return ResponseEntity
                 .ok()
                 .body(
-                    new ProdutoResponseDto()
-                            .toDto(produtoService
-                                    .save(dto.toModel(id)))
+                    produtoMapper.toDto(produtoService.save(produtoMapper.toModel(id, dto)))
                 );
     }
 
@@ -55,9 +56,8 @@ public class ProdutoController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(
-                    new ProdutoResponseDto().toDto(
-                        produtoService.save(dto.toModel())
-                    )
+                    produtoMapper.toDto(
+                        produtoService.save(produtoMapper.toModel(dto)))
                 );
     }
 
@@ -77,7 +77,7 @@ public class ProdutoController {
                 .body(
                     produtoService
                         .findById(id)
-                        .map(e -> new ProdutoResponseDto().toDto(e))
+                        .map(e -> produtoMapper.toDto(e))
                         .orElseThrow(() -> new RuntimeException("id inexistente"))
                 );
     }

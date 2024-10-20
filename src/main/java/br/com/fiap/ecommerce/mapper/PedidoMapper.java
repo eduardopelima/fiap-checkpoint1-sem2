@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.fiap.ecommerce.dtos.PedidoRequestCreateDto;
+import br.com.fiap.ecommerce.dtos.PedidoRequestUpdateDto;
 import br.com.fiap.ecommerce.dtos.PedidoResponseDto;
 import br.com.fiap.ecommerce.model.Pedido;
 
@@ -21,7 +22,7 @@ public class PedidoMapper {
         return modelMapper.map(dto, Pedido.class);
     }
 
-    public Pedido toModel(Long id, PedidoRequestCreateDto dto) {
+    public Pedido toModel(Long id, PedidoRequestUpdateDto dto) {
         Pedido pedido = modelMapper.map(dto, Pedido.class);
         pedido.setId(id);
         return pedido;

@@ -2,7 +2,6 @@ package br.com.fiap.ecommerce.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,35 +15,37 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.fiap.ecommerce.dtos.PedidoRequestCreateDto;
 import br.com.fiap.ecommerce.dtos.PedidoRequestUpdateDto;
 import br.com.fiap.ecommerce.dtos.PedidoResponseDto;
+import br.com.fiap.ecommerce.mapper.PedidoMapper;
 import br.com.fiap.ecommerce.service.PedidoService;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("pedidos")
+@RequiredArgsConstructor
 public class PedidoController {
-    @Autowired
-    PedidoService pedidoService;
+    
+    private final PedidoService pedidoService;
+    private final PedidoMapper pedidoMapper;
+
 
     @GetMapping
     public ResponseEntity<List<PedidoResponseDto>> list() {
         List<PedidoResponseDto> dtos = pedidoService.list()
                                                 .stream()
-                                                .map(e -> new PedidoResponseDto().toDto(e))
+                                                .map(e -> pedidoMapper.toDto(e))
                                                 .toList();
         return ResponseEntity.ok().body(dtos);
     }
 
     @PostMapping
     public ResponseEntity<PedidoResponseDto> create(@RequestBody PedidoRequestCreateDto dto) {
-        System.out.println("aqqweqweqweqweqewqq");
-        System.out.println(dto);
-        System.out.println(dto.getStatus());
-        System.out.println(dto.toModel().getStatus());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(
-                    new PedidoResponseDto().toDto(
-                        pedidoService.save(dto.toModel())
+                    pedidoMapper.toDto(
+                        pedidoService.save(pedidoMapper.toModel(dto))
                     )
                 );
     }
@@ -69,8 +70,9 @@ public class PedidoController {
         return ResponseEntity
                 .ok()
                 .body(
-                    new PedidoResponseDto()
-                            .toDto(pedidoService.save(dto.toModel(id)))
+                    pedidoMapper.toDto(
+                        pedidoService.save(pedidoMapper.toModel(id, dto))
+                    )
                 );
     }
 
@@ -81,7 +83,7 @@ public class PedidoController {
                 .body(
                     pedidoService
                         .findById(id)
-                        .map(e -> new PedidoResponseDto().toDto(e))
+                        .map(e -> pedidoMapper.toDto(e))
                         .orElseThrow(() -> new RuntimeException("Id inexistente"))
                 );   
     }
